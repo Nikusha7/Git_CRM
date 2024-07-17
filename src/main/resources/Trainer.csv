@@ -1,0 +1,6 @@
+id,firstName,lastName,isActive,specialization,TrainingType
+1,John,Doe,true,Strength,CARDIO
+2,Jane,Smith,true,Endurance,STRENGTH
+3,Bob,Johnson,false,Fitness,FLEXIBILITY
+4,Emily,Davis,true,Yoga,BALANCE
+5,John,Doe,true,Cardio,CARDIO

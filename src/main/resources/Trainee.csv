@@ -1,0 +1,16 @@
+id,firstname,lastname,isActive,dob,address
+1,Michael,Brown,true,1990-05-14,123 Elm St
+2,Sarah,Williams,true,1985-08-23,456 Oak St
+3,David,Jones,false,1992-11-30,789 Pine St
+4,Linda,Miller,true,1988-02-19,321 Maple St
+5,Robert,Garcia,true,1991-03-22,654 Birch St
+6,Jessica,Martinez,false,1987-07-14,987 Cedar St
+7,Thomas,Anderson,true,1993-12-05,741 Pine St
+8,Patricia,Thomas,true,1986-10-10,852 Oak St
+9,Christopher,Moore,true,1990-01-01,963 Maple St
+10,Barbara,Taylor,false,1984-06-18,147 Elm St
+11,Daniel,Jackson,true,1989-09-23,258 Birch St
+12,Amanda,Thompson,true,1992-04-15,369 Cedar St
+13,Matthew,White,true,1991-08-30,123 Oak St
+14,Elizabeth,Lee,false,1985-02-20,456 Pine St
+15,Joshua,Harris,true,1990-07-09,789 Maple St
