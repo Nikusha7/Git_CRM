@@ -1,7 +1,10 @@
 package ge.nika.gym_crm.services.impl;
 
 import ge.nika.gym_crm.DAO.Impl.TrainingDaoImpl;
+import ge.nika.gym_crm.DAO.TrainingDao;
 import ge.nika.gym_crm.entities.Training;
+import ge.nika.gym_crm.services.TraineeService;
+import ge.nika.gym_crm.services.TrainerService;
 import ge.nika.gym_crm.services.TrainingService;
 import ge.nika.gym_crm.storages.StorageTraining;
 import org.slf4j.Logger;
@@ -15,13 +18,13 @@ import java.util.Map;
 public class TrainingServiceImpl implements TrainingService {
     private static final Logger log = LoggerFactory.getLogger(TrainingServiceImpl.class);
     @Autowired
-    private TrainingDaoImpl trainingDao;
+    private TrainingDao trainingDao;
     @Autowired
     private StorageTraining storageTraining;
     @Autowired
-    private TraineeServiceImpl traineeService;
+    private TraineeService traineeService;
     @Autowired
-    private TrainerServiceImpl trainerService;
+    private TrainerService trainerService;
 
     @Override
     public void create(Training training) {

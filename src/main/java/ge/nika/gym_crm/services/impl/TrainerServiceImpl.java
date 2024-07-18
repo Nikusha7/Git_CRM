@@ -1,6 +1,7 @@
 package ge.nika.gym_crm.services.impl;
 
 import ge.nika.gym_crm.DAO.Impl.TrainerDaoImpl;
+import ge.nika.gym_crm.DAO.TrainerDao;
 import ge.nika.gym_crm.entities.Trainer;
 import ge.nika.gym_crm.services.TrainerService;
 import ge.nika.gym_crm.storages.StorageTrainer;
@@ -16,7 +17,7 @@ public class TrainerServiceImpl implements TrainerService {
     private static final Logger log = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    private TrainerDaoImpl trainerDao;
+    private TrainerDao trainerDao;
     @Autowired
     private StorageTrainer storageTrainer;
 
