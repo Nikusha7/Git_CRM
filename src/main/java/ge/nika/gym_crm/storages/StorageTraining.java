@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,15 +43,15 @@ public class StorageTraining {
                 Integer traineeId = Integer.parseInt(parts[1]);
                 String trainingName = parts[2];
                 TrainingType trainingType = TrainingType.valueOf(parts[3]);
-                Date trainingDate = parseDate(parts[4]);
+                LocalDate trainingDate = LocalDate.parse(parts[4]);
                 String trainingDuration = parts[5];
 
-                Training training = new Training(traineeId, trainerId, trainingName, trainingType, trainingDate, trainingDuration);
+                Training training = new Training(trainerId, traineeId, trainingName, trainingType, trainingDate, trainingDuration);
                 trainingStorage.put(trainerId+""+traineeId, training);  // Use hashCode as the key
 
                 log.info("Loaded training: " + training);
             }
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             log.error("Error occurred while reading " + dataFilePath + ": \n" + e.getMessage());
         }
     }
