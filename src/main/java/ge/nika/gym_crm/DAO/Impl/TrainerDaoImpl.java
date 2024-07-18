@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TrainerDaoImpl implements TrainerDao {
-    private static final Logger log = LoggerFactory.getLogger(TrainerDaoImpl.class);
-
     @Autowired
     private  StorageTrainer storageTrainer;
 

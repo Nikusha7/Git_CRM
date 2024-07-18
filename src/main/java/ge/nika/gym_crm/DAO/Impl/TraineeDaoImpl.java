@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TraineeDaoImpl implements TraineeDao {
-    private static final Logger log = LoggerFactory.getLogger(TraineeDaoImpl.class);
     @Autowired
     private StorageTrainee storageTrainee;
 
