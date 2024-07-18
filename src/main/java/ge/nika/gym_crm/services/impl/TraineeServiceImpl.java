@@ -24,7 +24,7 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     public void create(Trainee trainee) {
         traineeDao.create(trainee);
-        logger.info("Trainee: "+trainee+", Has been created");
+        logger.info("Trainee: " + trainee + ", Has been created");
     }
 
     @Override
@@ -49,10 +49,11 @@ public class TraineeServiceImpl implements TraineeService {
         Trainee trainee = traineeDao.select(userId);
         if (trainee != null) {
             logger.info("Trainee with id: " + userId + ", has been selected/retrieved");
+            return trainee;
         } else {
             logger.warn("Trainee with id: " + userId + " not found");
         }
-        return trainee;
+        return null;
     }
 
 }

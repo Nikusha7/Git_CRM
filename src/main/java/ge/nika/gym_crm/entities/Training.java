@@ -10,7 +10,8 @@ public class Training {
     private Date trainingDate;
     private String trainingDuration;
 
-    public Training(Integer trainerId, Integer traineeId, String trainingName, TrainingType trainingType, Date trainingDate, String trainingDuration) {
+    public Training(Integer trainerId, Integer traineeId, String trainingName, TrainingType trainingType,
+                    Date trainingDate, String trainingDuration) {
         this.trainerId = trainerId;
         this.traineeId = traineeId;
         this.trainingName = trainingName;

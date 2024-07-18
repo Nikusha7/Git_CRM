@@ -38,10 +38,11 @@ public class TrainerServiceImpl implements TrainerService {
         Trainer trainer = trainerDao.select(userId);
         if (trainer != null) {
             log.info("Trainer with id: " + userId + ", has been selected/retrieved");
+            return trainer;
         } else {
             log.warn("Trainer with id: " + userId + " not found");
         }
-        return trainer;
+        return null;
     }
 
 }

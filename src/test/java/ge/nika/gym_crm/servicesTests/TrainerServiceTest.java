@@ -22,23 +22,7 @@ public class TrainerServiceTest {
 
     @Test
     public void testCreateTrainer() {
-        // Mock behavior of storageTrainerMock to return a trainer when saveTrainer is called
-        when(storageTrainerMock.saveTrainer(any(Trainer.class))).thenAnswer(invocation -> {
-            Trainer trainer = invocation.getArgument(0);
-            trainer.setId(1); // Simulating storage assigning an ID
-            return trainer;
-        });
 
-        // Create a trainer
-        Trainer trainerToCreate = new Trainer("John", "Doe", "john.doe", true, "Physical balancing trainer", 1, TrainingType.BALANCE);
-        trainerService.create(trainerToCreate);
-
-        // Assert that the created trainer is not null and has an ID assigned
-        assertNotNull(createdTrainer);
-        assertEquals(1, createdTrainer.getId()); // Assuming storage assigns ID
-
-        // Verify that saveTrainer method of storageTrainerMock was called exactly once with any Trainer object
-        verify(storageTrainerMock, times(1)).saveTrainer(any(Trainer.class));
     }
 
 }

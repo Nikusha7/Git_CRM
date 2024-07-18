@@ -16,9 +16,7 @@ import java.util.Map;
 
 @Component
 public class StorageTrainee {
-
     private static final Logger log = LoggerFactory.getLogger(StorageTrainee.class);
-
     private final Map<Integer, Trainee> traineeStorage = new HashMap<>();
 
     @Value("${trainee.data.file.path}")

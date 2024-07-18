@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class StorageTraining {
     private static final Logger log = LoggerFactory.getLogger(StorageTraining.class);
-    private final Map<Integer, Training> trainingStorage = new HashMap<>();
+    private final Map<String, Training> trainingStorage = new HashMap<>();
 
     @Value("${training.data.file.path}")
     private String dataFilePath;
@@ -46,7 +46,7 @@ public class StorageTraining {
                 String trainingDuration = parts[5];
 
                 Training training = new Training(traineeId, trainerId, trainingName, trainingType, trainingDate, trainingDuration);
-                trainingStorage.put(training.hashCode(), training);  // Use hashCode as the key
+                trainingStorage.put(trainerId+""+traineeId, training);  // Use hashCode as the key
 
                 log.info("Loaded training: " + training);
             }
@@ -60,7 +60,7 @@ public class StorageTraining {
         return dateFormat.parse(dateStr);
     }
 
-    public Map<Integer, Training> getTrainingStorage() {
+    public Map<String, Training> getTrainingStorage() {
         return trainingStorage;
     }
 }
