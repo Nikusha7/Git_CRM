@@ -21,9 +21,14 @@ public class StorageTrainerTest {
     private StorageTrainer storageTrainer;
 
     @Test
-    public void testStorageSize() {
+    public void testPostConstructInitialization() {
         Map<Integer, Trainer> trainerStorage = storageTrainer.getTrainerStorage();
         assertNotNull(trainerStorage);
+        assertFalse(trainerStorage.isEmpty());
+    }
+    @Test
+    public void testStorageSize() {
+        Map<Integer, Trainer> trainerStorage = storageTrainer.getTrainerStorage();
         assertEquals(5, trainerStorage.size());
     }
 
