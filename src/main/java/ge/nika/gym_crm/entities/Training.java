@@ -1,17 +1,17 @@
 package ge.nika.gym_crm.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Training {
     private Integer trainerId;
     private Integer traineeId;
     private String trainingName;
     private TrainingType trainingType;
-    private Date trainingDate;
+    private LocalDate trainingDate;
     private String trainingDuration;
 
     public Training(Integer trainerId, Integer traineeId, String trainingName, TrainingType trainingType,
-                    Date trainingDate, String trainingDuration) {
+                    LocalDate trainingDate, String trainingDuration) {
         this.trainerId = trainerId;
         this.traineeId = traineeId;
         this.trainingName = trainingName;
@@ -52,11 +52,11 @@ public class Training {
         this.trainingType = trainingType;
     }
 
-    public Date getTrainingDate() {
+    public LocalDate getTrainingDate() {
         return trainingDate;
     }
 
-    public void setTrainingDate(Date trainingDate) {
+    public void setTrainingDate(LocalDate trainingDate) {
         this.trainingDate = trainingDate;
     }
 
