@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class StorageTrainee {
@@ -38,14 +39,14 @@ public class StorageTrainee {
                 String firstName = parts[1];
                 String lastName = parts[2];
                 boolean isActive = Boolean.parseBoolean(parts[3]);
-                LocalDate dob =     LocalDate.parse(parts[4]);
+                LocalDate dob = LocalDate.parse(parts[4]);
                 String address = parts[5];
+                Trainee trainee = new Trainee(firstName, lastName, isActive, dob, address, id);
 
-                String userName = generateUniqueUsername(firstName, lastName);
+                trainee.setUserName(generateUniqueUsername(firstName, lastName));
+                trainee.setPassword(generatePassword());
 
-                Trainee trainee = new Trainee(firstName, lastName, userName, isActive, dob, address, id);
                 traineeStorage.put(id, trainee);
-
                 log.info("Trainee: "+trainee);
             }
         } catch (IOException e) {
@@ -69,6 +70,15 @@ public class StorageTrainee {
     private boolean checkUsernameExists(String username) {
         return traineeStorage.values().stream()
                 .anyMatch(trainee -> trainee.getUserName().equals(username));
+    }
+
+    private String generatePassword() {
+        Random random = new Random();
+        return random.ints(48, 122 + 1)
+                .filter(i -> Character.isLetterOrDigit(i))
+                .limit(10)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 
     public Map<Integer, Trainee> getTraineeStorage() {

@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class StorageTrainer {
@@ -42,12 +43,12 @@ public class StorageTrainer {
                 boolean isActive = Boolean.parseBoolean(parts[3]);
                 String specialization = parts[4];
                 TrainingType trainingType = TrainingType.valueOf(parts[5]);
+                Trainer trainer = new Trainer(firstName, lastName, isActive, specialization, id, trainingType);
 
-                String userName = generateUniqueUsername(firstName, lastName);
+                trainer.setUserName(generateUniqueUsername(firstName, lastName));
+                trainer.setPassword(generatePassword());
 
-                Trainer trainer = new Trainer(firstName, lastName, userName, isActive, specialization, id, trainingType);
                 trainerStorage.put(id, trainer);
-
                 log.info("Trainer initialized: " + trainer);
             }
         } catch (IOException e) {
@@ -72,6 +73,15 @@ public class StorageTrainer {
     private boolean checkUsernameExists(String username) {
         return trainerStorage.values().stream()
                 .anyMatch(trainer -> trainer.getUserName().equals(username));
+    }
+
+    private String generatePassword() {
+        Random random = new Random();
+        return random.ints(48, 122 + 1)
+                .filter(i -> Character.isLetterOrDigit(i))
+                .limit(10)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 
     public Map<Integer, Trainer> getTrainerStorage() {

@@ -1,15 +1,14 @@
 package ge.nika.gym_crm.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Trainee extends User {
     private LocalDate dob;
     private String address;
     private Integer userId;
 
-    public Trainee(String firstName, String lastName, String userName, Boolean isActive, LocalDate dob, String address, Integer userId) {
-        super(firstName, lastName, userName, isActive);
+    public Trainee(String firstName, String lastName, Boolean isActive, LocalDate dob, String address, Integer userId) {
+        super(firstName, lastName, isActive);
         this.dob = dob;
         this.address = address;
         this.userId = userId;
@@ -47,6 +46,5 @@ public class Trainee extends User {
                 ", address='" + address + '\'' +
                 "} ";
     }
-
 
 }

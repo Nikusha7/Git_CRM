@@ -5,9 +5,9 @@ public class Trainer extends User {
     private Integer userId;
     private TrainingType trainingType;
 
-    public Trainer(String firstName, String lastName, String userName, Boolean isActive,
-                   String specialization, Integer userId, TrainingType trainingType) {
-        super(firstName, lastName, userName, isActive);
+    public Trainer(String firstName, String lastName, Boolean isActive, String specialization,
+                   Integer userId, TrainingType trainingType) {
+        super(firstName, lastName, isActive);
         this.specialization = specialization;
         this.userId = userId;
         this.trainingType = trainingType;

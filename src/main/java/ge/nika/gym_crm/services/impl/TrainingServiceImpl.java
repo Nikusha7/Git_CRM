@@ -6,6 +6,7 @@ import ge.nika.gym_crm.services.TrainingService;
 import ge.nika.gym_crm.storages.StorageTraining;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -13,18 +14,14 @@ import java.util.Map;
 @Service
 public class TrainingServiceImpl implements TrainingService {
     private static final Logger log = LoggerFactory.getLogger(TrainingServiceImpl.class);
-    private final TrainingDaoImpl trainingDao;
-    private final StorageTraining storageTraining;
-    private final TraineeServiceImpl traineeService;
-    private final TrainerServiceImpl trainerService;
-
-    public TrainingServiceImpl(TrainingDaoImpl trainingDao, StorageTraining storageTraining,
-                               TraineeServiceImpl traineeService, TrainerServiceImpl trainerService) {
-        this.trainingDao = trainingDao;
-        this.storageTraining = storageTraining;
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
-    }
+    @Autowired
+    private TrainingDaoImpl trainingDao;
+    @Autowired
+    private StorageTraining storageTraining;
+    @Autowired
+    private TraineeServiceImpl traineeService;
+    @Autowired
+    private TrainerServiceImpl trainerService;
 
     @Override
     public void create(Training training) {
