@@ -52,7 +52,7 @@ public class TrainerServiceImpl implements TrainerService {
         return null;
     }
 
-    private String generatePassword() {
+    public String generatePassword() {
         Random random = new Random();
         return random.ints(48, 122 + 1)
                 .filter(i -> Character.isLetterOrDigit(i))
@@ -61,7 +61,7 @@ public class TrainerServiceImpl implements TrainerService {
                 .toString();
     }
 
-    private String generateUniqueUsername(String firstName, String lastName) {
+    public String generateUniqueUsername(String firstName, String lastName) {
         String baseUsername = firstName + "." + lastName;
         String username = baseUsername;
         int suffix = 1;
