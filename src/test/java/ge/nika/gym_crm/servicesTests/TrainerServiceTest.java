@@ -41,13 +41,13 @@ public class TrainerServiceTest {
         Trainer trainer = new Trainer("Nick", "Brown", true, "Strength", 6, TrainingType.STRENGTH);
         trainerService.create(trainer);
         assertTrainerData(trainerService.select(6), 6, "Nick", "Brown", true, "Strength", TrainingType.STRENGTH);
-        storageTrainer.getTrainerStorage().remove(6);
     }
 
     @Test
     public void testUpdateTrainer() {
-        trainerService.update(2, new Trainer("Jane-UPDATED", "Smith", true, "Endurance", 2, TrainingType.STRENGTH));
-        assertTrainerData(trainerService.select(2), 2, "Jane-UPDATED", "Smith", true, "Endurance", TrainingType.STRENGTH);
+        trainerService.update(6, new Trainer("Nick-Updated", "Brown", true, "Strength", 6, TrainingType.STRENGTH));
+        assertTrainerData(trainerService.select(6), 6, "Nick-Updated", "Brown", true, "Strength", TrainingType.STRENGTH);
+        storageTrainer.getTrainerStorage().remove(6);
     }
 
     @Test

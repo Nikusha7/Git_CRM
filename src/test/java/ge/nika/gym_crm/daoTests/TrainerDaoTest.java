@@ -45,8 +45,8 @@ public class TrainerDaoTest {
 
     @Test
     void testUpdate() {
-        trainerDao.update(6, new Trainer("Jane-UPDATED", "Smith", true, "Endurance", 6, TrainingType.STRENGTH));
-        assertTrainerData(trainerDao.select(6), 6, "Jane-UPDATED", "Smith", true, "Endurance", TrainingType.STRENGTH);
+        trainerDao.update(6, new Trainer("Nick-Updated", "Brown", true, "Strength", 6, TrainingType.STRENGTH));
+        assertTrainerData(trainerDao.select(6), 6, "Nick-Updated", "Brown", true, "Strength", TrainingType.STRENGTH);
         storageTrainer.getTrainerStorage().remove(6);
     }
 
