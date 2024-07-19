@@ -17,14 +17,17 @@ import java.util.Map;
 @Service
 public class TrainingServiceImpl implements TrainingService {
     private static final Logger log = LoggerFactory.getLogger(TrainingServiceImpl.class);
-    @Autowired
-    private TrainingDao trainingDao;
-    @Autowired
-    private StorageTraining storageTraining;
-    @Autowired
-    private TraineeService traineeService;
-    @Autowired
-    private TrainerService trainerService;
+    private final TrainingDao trainingDao;
+    private final StorageTraining storageTraining;
+    private final TraineeService traineeService;
+    private final TrainerService trainerService;
+
+    public TrainingServiceImpl(TrainingDao trainingDao, StorageTraining storageTraining, TraineeService traineeService, TrainerService trainerService) {
+        this.trainingDao = trainingDao;
+        this.storageTraining = storageTraining;
+        this.traineeService = traineeService;
+        this.trainerService = trainerService;
+    }
 
     @Override
     public void create(Training training) {

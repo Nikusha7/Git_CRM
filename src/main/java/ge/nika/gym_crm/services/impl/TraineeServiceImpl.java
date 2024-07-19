@@ -16,10 +16,13 @@ import java.util.Random;
 public class TraineeServiceImpl implements TraineeService {
     private static final Logger log = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
-    @Autowired
-    private TraineeDao traineeDao;
-    @Autowired
-    private StorageTrainee storageTrainee;
+    private final TraineeDao traineeDao;
+    private final StorageTrainee storageTrainee;
+
+    public TraineeServiceImpl(TraineeDao traineeDao, StorageTrainee storageTrainee) {
+        this.traineeDao = traineeDao;
+        this.storageTrainee = storageTrainee;
+    }
 
     @Override
     public void create(Trainee trainee) {

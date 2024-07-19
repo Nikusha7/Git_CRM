@@ -16,10 +16,13 @@ import java.util.Random;
 public class TrainerServiceImpl implements TrainerService {
     private static final Logger log = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
-    @Autowired
-    private TrainerDao trainerDao;
-    @Autowired
-    private StorageTrainer storageTrainer;
+    private final TrainerDao trainerDao;
+    private final StorageTrainer storageTrainer;
+
+    public TrainerServiceImpl(TrainerDao trainerDao, StorageTrainer storageTrainer) {
+        this.trainerDao = trainerDao;
+        this.storageTrainer = storageTrainer;
+    }
 
     @Override
     public void create(Trainer trainer) {
