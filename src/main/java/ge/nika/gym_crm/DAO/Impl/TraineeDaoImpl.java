@@ -10,8 +10,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TraineeDaoImpl implements TraineeDao {
-    @Autowired
-    private StorageTrainee storageTrainee;
+    private final StorageTrainee storageTrainee;
+
+    public TraineeDaoImpl(StorageTrainee storageTrainee) {
+        this.storageTrainee = storageTrainee;
+    }
 
     @Override
     public void create(Trainee trainee) {

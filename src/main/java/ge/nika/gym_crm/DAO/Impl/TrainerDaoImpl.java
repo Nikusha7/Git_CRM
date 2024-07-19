@@ -11,8 +11,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TrainerDaoImpl implements TrainerDao {
-    @Autowired
-    private  StorageTrainer storageTrainer;
+    private final StorageTrainer storageTrainer;
+
+    public TrainerDaoImpl(StorageTrainer storageTrainer) {
+        this.storageTrainer = storageTrainer;
+    }
 
     @Override
     public void create(Trainer trainer) {

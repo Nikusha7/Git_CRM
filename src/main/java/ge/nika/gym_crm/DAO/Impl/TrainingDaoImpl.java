@@ -8,8 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TrainingDaoImpl implements TrainingDao {
-    @Autowired
-    private StorageTraining storageTraining;
+    private final StorageTraining storageTraining;
+
+    public TrainingDaoImpl(StorageTraining storageTraining) {
+        this.storageTraining = storageTraining;
+    }
 
     @Override
     public void create(Training training) {
