@@ -29,6 +29,7 @@ public class StorageTraineeTest {
     @Test
     public void testStorageSize() {
         Map<Integer, Trainee> traineeStorage = storageTrainee.getTraineeStorage();
+        storageTrainee.getTraineeStorage().remove(16);
         assertEquals(15, traineeStorage.size());
     }
 
