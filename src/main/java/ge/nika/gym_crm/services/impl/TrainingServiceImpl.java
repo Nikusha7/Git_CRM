@@ -32,7 +32,7 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void create(Training training) {
         Map<String, Training> trainings = storageTraining.getTrainingStorage();
-        if (traineeService.select(training.getTraineeId()) != null || trainerService.select(training.getTrainerId()) != null) {
+        if (traineeService.select(training.getTraineeId()) == null || trainerService.select(training.getTrainerId()) == null) {
             log.warn("Training can not be created! because Trainee with id:" + training.getTraineeId() + ", " +
                     "or Trainer with id:" + training.getTrainerId() + ", does not exists!");
         } else {
