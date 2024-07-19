@@ -26,6 +26,8 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     public void create(Trainee trainee) {
+        trainee.setPassword(generatePassword());
+        trainee.setUserName(generateUniqueUsername(trainee.getFirstName(), trainee.getLastName()));
         traineeDao.create(trainee);
         log.info("Trainee: " + trainee + ", Has been created");
     }
@@ -33,7 +35,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     public void update(Integer userId, Trainee newTrainee) {
         if (traineeDao.select(userId) != null) {
-            // Update logic here if needed
+            newTrainee.setPassword(generatePassword());
+            newTrainee.setUserName(generateUniqueUsername(newTrainee.getFirstName(), newTrainee.getLastName()));
             traineeDao.update(userId, newTrainee);
             log.info("Trainee with id: " + userId + ", has been updated");
         } else {
@@ -54,7 +57,7 @@ public class TraineeServiceImpl implements TraineeService {
             log.info("Trainee with id: " + userId + ", has been selected/retrieved");
             return trainee;
         } else {
-            log.warn("Trainee with id: " + userId + " not found");
+            log.warn("Trainee with id: " + userId + " does not exists");
         }
         return null;
     }
@@ -62,7 +65,7 @@ public class TraineeServiceImpl implements TraineeService {
     public String generatePassword() {
         Random random = new Random();
         return random.ints(48, 122 + 1)
-                .filter(i -> Character.isLetterOrDigit(i))
+                .filter(Character::isLetterOrDigit)
                 .limit(10)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();

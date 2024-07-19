@@ -59,7 +59,7 @@ public class TrainerServiceImpl implements TrainerService {
     public String generatePassword() {
         Random random = new Random();
         return random.ints(48, 122 + 1)
-                .filter(i -> Character.isLetterOrDigit(i))
+                .filter(Character::isLetterOrDigit)
                 .limit(10)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
