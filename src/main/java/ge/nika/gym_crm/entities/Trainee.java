@@ -1,50 +1,25 @@
 package ge.nika.gym_crm.entities;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
-public class Trainee extends User {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="trainees")
+public class Trainee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private LocalDate dob;
     private String address;
+    @Column(nullable = false)
     private Integer userId;
-
-    public Trainee(String firstName, String lastName, Boolean isActive, LocalDate dob, String address, Integer userId) {
-        super(firstName, lastName, isActive);
-        this.dob = dob;
-        this.address = address;
-        this.userId = userId;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "Trainee{ userId " + userId + '\'' +
-                ", " + super.toString() + '\'' +
-                "dob=" + dob +
-                ", address='" + address + '\'' +
-                "} ";
-    }
-
 }
