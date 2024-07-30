@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "training_type")
 public class TrainingType {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

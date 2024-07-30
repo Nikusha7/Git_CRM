@@ -16,10 +16,13 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TrainingTypeNames specialization;
-    @Column(nullable = false)
-    private Integer userId;
+
+    @ManyToOne
+    @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
+    private TrainingType specialization;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+    private User user;
 
 }

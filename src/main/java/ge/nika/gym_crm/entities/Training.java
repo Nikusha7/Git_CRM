@@ -18,14 +18,22 @@ public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
-    private Integer trainerId;
-    @Column(nullable = false)
-    private Integer traineeId;
+
+    @ManyToOne
+    @JoinColumn(name = "trainer_id", referencedColumnName = "id", nullable = false)
+    private Trainer trainer;
+
+    @ManyToOne
+    @JoinColumn(name = "trainee_id", referencedColumnName = "id", nullable = false)
+    private Trainee trainee;
+
     @Column(nullable = false)
     private String trainingName;
-    @Column(nullable = false)
-    private Integer trainingTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = "training_type_id", referencedColumnName = "id", nullable = false)
+    private TrainingType trainingType;
+
     @Column(nullable = false)
     private LocalDate trainingDate;
     @Column(nullable = false)

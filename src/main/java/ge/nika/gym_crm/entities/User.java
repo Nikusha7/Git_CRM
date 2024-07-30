@@ -29,5 +29,16 @@ public class User {
     private Boolean isActive;
 
 
+    public User(Integer id, String firstName, String lastName, Boolean isActive) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = isActive;
+    }
 
+    public User(String firstName, String lastName, Boolean isActive) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = isActive;
+    }
 }
