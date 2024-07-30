@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "training_type")
 public class TrainingType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Enumerated(EnumType.STRING)
