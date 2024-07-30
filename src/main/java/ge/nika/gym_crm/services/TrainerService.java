@@ -5,8 +5,8 @@ import ge.nika.gym_crm.entities.Trainer;
 
 public interface TrainerService {
     Trainer create(TrainerDTO trainerDTO);
-    Trainer select(Integer userId);
-    void update(Integer userId, Trainer newTrainer);
+    Trainer select(String username);
+    Trainer update(Integer userId, Trainer newTrainer);
 
 
 }
