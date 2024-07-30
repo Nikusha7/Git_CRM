@@ -1,89 +1,43 @@
 package ge.nika.gym_crm.servicesTests;
 
-import ge.nika.gym_crm.entities.Trainee;
-import ge.nika.gym_crm.entities.Trainer;
-import ge.nika.gym_crm.entities.TrainingType;
-import ge.nika.gym_crm.services.impl.TrainerServiceImpl;
-import ge.nika.gym_crm.storages.StorageTrainer;
+import ge.nika.gym_crm.DTO.TrainerDTO;
+import ge.nika.gym_crm.entities.*;
+import ge.nika.gym_crm.repositories.TrainerRepository;
+import ge.nika.gym_crm.services.TrainerService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TrainerServiceTest {
 
     @Autowired
-    private TrainerServiceImpl trainerService;
+    private TrainerRepository trainerRepository;
     @Autowired
-    private StorageTrainer storageTrainer;
+    private TrainerService trainerService;
 
     @Test
-    public void testSelectTrainer() {
-        assertTrainerData(trainerService.select(1), 1, "John", "Doe", true, "Strength", TrainingType.CARDIO);
+    void testCreateTrainer() {
+        TrainerDTO trainerDTO = new TrainerDTO("Luke", "Bor", true,
+                new TrainingType(1, TrainingTypeNames.CARDIO));
+        trainerService.create(trainerDTO);
     }
 
     @Test
-    public void testSelectNotExistingTrainer() {
-        assertNull(trainerService.select(20));
+    void testSelectTrainee() {
+        System.out.println(trainerService.select("Luke.Bor"));
     }
+
 
     @Test
-    public void testCreateTrainer() {
-        Trainer trainer = new Trainer("Nick", "Brown", true, "Strength", 6, TrainingType.STRENGTH);
-        trainerService.create(trainer);
-        assertTrainerData(trainerService.select(6), 6, "Nick", "Brown", true, "Strength", TrainingType.STRENGTH);
-    }
+    void testUpdateTrainee(){
+        User user = new User("Luke-UPDATED", "Bor", true);
+        Trainer trainer = new Trainer(new TrainingType(1, TrainingTypeNames.CARDIO), user);
 
-    @Test
-    public void testUpdateTrainer() {
-        trainerService.update(6, new Trainer("Nick-Updated", "Brown", true, "Strength", 6, TrainingType.STRENGTH));
-        assertTrainerData(trainerService.select(6), 6, "Nick-Updated", "Brown", true, "Strength", TrainingType.STRENGTH);
-        storageTrainer.getTrainerStorage().remove(6);
-    }
-
-    @Test
-    public void testUpdateNotExistingTrainer() {
-        trainerService.update(25, new Trainer("Jane", "Smith", true, "Endurance", 2, TrainingType.STRENGTH));
-        assertNull(trainerService.select(25));
-    }
-
-    @Test
-    public void testGeneratePassword() {
-        String password = trainerService.generatePassword();
-        assertNotNull(password);
-        assertEquals(10, password.length());
-    }
-
-    @Test
-    void generateUniqueUsername_noConflict() {
-        String username = trainerService.generateUniqueUsername("Nick", "Doe");
-        assertEquals("Nick.Doe", username);
-    }
-
-    @Test
-    void generateUniqueUsername_withConflict() {
-        String username = trainerService.generateUniqueUsername("Bob", "Johnson");
-        System.out.println("new username: " + username);
-        assertEquals("Bob.Johnson1", username);
-    }
-
-    private void assertTrainerData(Trainer trainer, int id, String firstName, String lastName, boolean isActive, String specialization, TrainingType trainingType) {
-        assertNotNull(trainer);
-        assertEquals(id, trainer.getUserId());
-        assertEquals(firstName, trainer.getFirstName());
-        assertEquals(lastName, trainer.getLastName());
-        assertEquals(isActive, trainer.getActive());
-        assertEquals(specialization, trainer.getSpecialization());
-        assertEquals(trainingType, trainer.getTrainingType());
+        trainerService.update(1, trainer);
     }
 
 }

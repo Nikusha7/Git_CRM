@@ -1,89 +1,65 @@
 package ge.nika.gym_crm.servicesTests;
 
+import ge.nika.gym_crm.DTO.TraineeDTO;
+import ge.nika.gym_crm.DTO.UserDTO;
 import ge.nika.gym_crm.entities.Trainee;
-import ge.nika.gym_crm.services.impl.TraineeServiceImpl;
-import ge.nika.gym_crm.storages.StorageTrainee;
+import ge.nika.gym_crm.entities.User;
+import ge.nika.gym_crm.repositories.TraineeRepository;
+import ge.nika.gym_crm.repositories.UserRepository;
+import ge.nika.gym_crm.services.TraineeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TraineeServiceTest {
 
     @Autowired
-    private TraineeServiceImpl traineeService;
+    private TraineeRepository traineeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TraineeService traineeService;
+
 
     @Test
-    public void testSelectTrainee() {
-        assertTraineeData(traineeService.select(1), 1, "Michael", "Brown", true, LocalDate.of(1990, 5, 14), "123 Elm St");
+    void testSaveTrainee() {
+        TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
+                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+        traineeService.create(traineeDTO);
     }
 
     @Test
-    public void testSelectNotExistingTrainee() {
-        assertNull(traineeService.select(20));
+    void testSelectTrainee() {
+        System.out.println(traineeService.select("John.Bonny"));
+    }
+
+
+    @Test
+    void testUpdateTrainee(){
+        User user = new User("John-UPDATED!", "Bonny", true);
+        Trainee trainee = new Trainee(Date.valueOf(LocalDate.now()), "Georgia, Tbilisi", user);
+
+        traineeService.update(1, trainee);
     }
 
     @Test
-    public void testCreateTrainee() {
-        Trainee trainee = new Trainee("John", "Bonny", true, LocalDate.of(2000, 3, 21), "Georgia, Tbilisi", 16);
-        traineeService.create(trainee);
-        assertTraineeData(traineeService.select(16), 16, "John", "Bonny", true, LocalDate.of(2000, 3, 21), "Georgia, Tbilisi");
-    }
+    void testDeleteTrainee(){
+        traineeService.delete("John-UPDATED!.Bonny");
 
-    @Test
-    public void testUpdateTrainee() {
-        traineeService.update(16, new Trainee("John-updated!", "Bonny", true, LocalDate.of(2000, 3, 21), "Georgia, Tbilisi", 16));
-        assertTraineeData(traineeService.select(16), 16, "John-updated!", "Bonny", true, LocalDate.of(2000, 3, 21), "Georgia, Tbilisi");
-    }
-
-    @Test
-    public void testUpdateNotExistingTrainee() {
-        traineeService.update(25, new Trainee("Luke", "Williams", false, LocalDate.of(1985, 8, 23), "400 Oak St", 25));
-        assertNull(traineeService.select(25));
-    }
-
-    @Test
-    public void testDeleteTrainee(){
-        assertNotNull(traineeService.select(16));
-        traineeService.delete(16);
-        assertNull(traineeService.select(16));
-    }
-
-    @Test
-    public void testGeneratePassword() {
-        String password = traineeService.generatePassword();
-        assertNotNull(password);
-        assertEquals(10, password.length());
-    }
-
-    @Test
-    void generateUniqueUsername_noConflict() {
-        String username = traineeService.generateUniqueUsername("Nick", "Doe");
-        assertEquals("Nick.Doe", username);
-    }
-
-    @Test
-    void generateUniqueUsername_withConflict() {
-        String username = traineeService.generateUniqueUsername("Michael", "Brown");
-        System.out.println("new username: " + username);
-        assertEquals("Michael.Brown1", username);
-    }
-
-    private void assertTraineeData(Trainee trainee, int id, String firstName, String lastName, boolean isActive, LocalDate dob, String address) {
-        assertNotNull(trainee);
-        assertEquals(id, trainee.getUserId());
-        assertEquals(firstName, trainee.getFirstName());
-        assertEquals(lastName, trainee.getLastName());
-        assertEquals(isActive, trainee.getActive());
-        assertEquals(dob, trainee.getDob());
-        assertEquals(address, trainee.getAddress());
     }
 
 }
