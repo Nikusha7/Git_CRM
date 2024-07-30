@@ -37,7 +37,13 @@ public class Trainee {
         this.user = user;
     }
 
+    public Trainee(Date dob, String address) {
+        this.dob = dob;
+        this.address = address;
+    }
+
     public Trainee(User user) {
         this.user = user;
     }
+
 }

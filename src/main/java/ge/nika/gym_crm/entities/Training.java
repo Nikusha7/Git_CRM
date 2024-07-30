@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Builder
@@ -35,8 +36,17 @@ public class Training {
     private TrainingType trainingType;
 
     @Column(nullable = false)
-    private LocalDate trainingDate;
+    private Date trainingDate;
     @Column(nullable = false)
     private Integer trainingDuration;
 
+    public Training(Trainer trainer, Trainee trainee, String trainingName, TrainingType trainingType,
+                    Date trainingDate, Integer trainingDuration) {
+        this.trainer = trainer;
+        this.trainee = trainee;
+        this.trainingName = trainingName;
+        this.trainingType = trainingType;
+        this.trainingDate = trainingDate;
+        this.trainingDuration = trainingDuration;
+    }
 }
