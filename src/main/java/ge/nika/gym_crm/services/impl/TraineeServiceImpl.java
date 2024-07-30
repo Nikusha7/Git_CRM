@@ -1,66 +1,115 @@
 package ge.nika.gym_crm.services.impl;
 
-import ge.nika.gym_crm.DAO.Impl.TraineeDaoImpl;
-import ge.nika.gym_crm.DAO.TraineeDao;
+import ge.nika.gym_crm.DTO.TraineeDTO;
 import ge.nika.gym_crm.entities.Trainee;
+import ge.nika.gym_crm.entities.User;
+import ge.nika.gym_crm.repositories.TraineeRepository;
+import ge.nika.gym_crm.repositories.UserRepository;
 import ge.nika.gym_crm.services.TraineeService;
-import ge.nika.gym_crm.storages.StorageTrainee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
     private static final Logger log = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
-    private final TraineeDao traineeDao;
-    private final StorageTrainee storageTrainee;
+    private final TraineeRepository traineeRepository;
+    private final UserRepository userRepository;
 
-    public TraineeServiceImpl(TraineeDao traineeDao, StorageTrainee storageTrainee) {
-        this.traineeDao = traineeDao;
-        this.storageTrainee = storageTrainee;
+    @Autowired
+    public TraineeServiceImpl(TraineeRepository traineeRepository, UserRepository userRepository) {
+        this.traineeRepository = traineeRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public void create(Trainee trainee) {
-        trainee.setPassword(generatePassword());
-        trainee.setUserName(generateUniqueUsername(trainee.getFirstName(), trainee.getLastName()));
-        traineeDao.create(trainee);
-        log.info("Trainee: " + trainee + ", Has been created");
+    @Transactional
+    public Trainee create(TraineeDTO traineeDTO) {
+    User user = new User(traineeDTO.getFirstName(), traineeDTO.getLastName(), traineeDTO.getIsActive());
+    user.setUserName(generateUniqueUsername(user.getFirstName(), user.getLastName()));
+    user.setPassword(generatePassword());
+
+    Trainee trainee = new Trainee(Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+
+    User savedUser = userRepository.save(user);
+    trainee.setUser(savedUser);
+
+        return traineeRepository.save(trainee);
     }
 
     @Override
-    public void update(Integer userId, Trainee newTrainee) {
-        if (traineeDao.select(userId) != null) {
-            newTrainee.setPassword(generatePassword());
-            newTrainee.setUserName(generateUniqueUsername(newTrainee.getFirstName(), newTrainee.getLastName()));
-            traineeDao.update(userId, newTrainee);
-            log.info("Trainee with id: " + userId + ", has been updated");
-        } else {
-            log.warn("Trainee with id: " + userId + " not found for update");
+    public Trainee select(String userName) {
+        Optional<Trainee> trainee = traineeRepository.findByUser_UserName(userName);
+        return trainee.orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public Trainee update(Integer id, Trainee trainee) {
+        Optional<Trainee> existingTraineeOptional = traineeRepository.findById(id);
+        if (existingTraineeOptional.isEmpty()) {
+            throw new IllegalArgumentException("Trainee not found");
         }
+
+        trainee.getUser().setPassword(generatePassword());
+        trainee.getUser().setUserName(generateUniqueUsername(trainee.getUser().getFirstName(), trainee.getUser().getLastName()));
+
+        Trainee existingTrainee = existingTraineeOptional.get();
+        User existingUser = existingTrainee.getUser();
+        User updatedUser = trainee.getUser();
+
+        // Update user details
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setUserName(updatedUser.getUserName());
+        existingUser.setPassword(updatedUser.getPassword());
+        existingUser.setIsActive(updatedUser.getIsActive());
+
+        // Save the updated user
+        userRepository.save(existingUser);
+
+        // Update trainee details
+        existingTrainee.setDob(trainee.getDob());
+        existingTrainee.setAddress(trainee.getAddress());
+
+        // Save the updated trainee
+        return traineeRepository.save(existingTrainee);
     }
 
     @Override
-    public void delete(Integer userId) {
-        traineeDao.delete(userId);
-        log.info("Trainee with id: " + userId + ", has been deleted");
-    }
-
-    @Override
-    public Trainee select(Integer userId) {
-        Trainee trainee = traineeDao.select(userId);
-        if (trainee != null) {
-            log.info("Trainee with id: " + userId + ", has been selected/retrieved");
-            return trainee;
-        } else {
-            log.warn("Trainee with id: " + userId + " does not exists");
+    @Transactional
+    public void delete(String username) {
+        Optional<User> userOptional = userRepository.findByUserName(username);
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("User with username: " + username + " not found");
         }
-        return null;
+
+        User user = userOptional.get();
+
+        // Find the Trainee by the user's ID
+        Optional<Trainee> traineeOptional = traineeRepository.findByUserId(user.getId());
+        if (traineeOptional.isEmpty()) {
+            throw new IllegalArgumentException("Trainee associated with the user not found");
+        }
+
+        Trainee trainee = traineeOptional.get();
+
+        // Delete the trainee
+        traineeRepository.delete(trainee);
+
+        // Delete the associated user
+        userRepository.delete(user);
     }
+
+
 
     public String generatePassword() {
         Random random = new Random();
@@ -85,8 +134,7 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     private boolean checkUsernameExists(String username) {
-        return storageTrainee.getTraineeStorage().values().stream()
-                .anyMatch(trainee -> trainee.getUserName().equals(username));
+        return userRepository.existsByUserName(username);
     }
 
 }
