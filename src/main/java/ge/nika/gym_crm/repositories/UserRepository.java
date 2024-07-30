@@ -7,5 +7,9 @@ import java.util.Optional;
 
 public interface UserRepository
         extends JpaRepository<User, Integer> {
-    User findByUserName(String userName);
+    Optional<User> findByUserName(String userName);
+
+//    checking if username exists in user table, usable for both trainee and trainer to generate unique
+    boolean existsByUserName(String username);
+
 }
