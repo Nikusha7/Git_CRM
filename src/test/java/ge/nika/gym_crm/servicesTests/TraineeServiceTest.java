@@ -1,26 +1,17 @@
 package ge.nika.gym_crm.servicesTests;
 
 import ge.nika.gym_crm.DTO.TraineeDTO;
-import ge.nika.gym_crm.DTO.UserDTO;
 import ge.nika.gym_crm.entities.Trainee;
 import ge.nika.gym_crm.entities.User;
 import ge.nika.gym_crm.repositories.TraineeRepository;
 import ge.nika.gym_crm.repositories.UserRepository;
 import ge.nika.gym_crm.services.TraineeService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class TraineeServiceTest {
@@ -40,6 +31,10 @@ public class TraineeServiceTest {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
                 Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
         traineeService.create(traineeDTO);
+
+        TraineeDTO traineeDTO1 = new TraineeDTO("Nick", "Bonny", true,
+                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+        traineeService.create(traineeDTO1);
     }
 
     @Test
@@ -49,17 +44,26 @@ public class TraineeServiceTest {
 
 
     @Test
-    void testUpdateTrainee(){
+    void testUpdateTrainee() {
         User user = new User("John-UPDATED!", "Bonny", true);
         Trainee trainee = new Trainee(Date.valueOf(LocalDate.now()), "Georgia, Tbilisi", user);
 
-        traineeService.update(1, trainee);
+        traineeService.update(2, trainee);
     }
 
     @Test
-    void testDeleteTrainee(){
+    void testChangePassword() {
+        traineeService.changePassword("John-UPDATED!.Bonny", "newpasswor");
+    }
+
+    @Test
+    void testActivateDeactivate() {
+        traineeService.activateDeactivate("John-UPDATED!.Bonny", false);
+    }
+
+    @Test
+    void testDeleteTrainee() {
         traineeService.delete("John-UPDATED!.Bonny");
 
     }
-
 }
