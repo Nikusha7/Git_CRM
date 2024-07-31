@@ -4,6 +4,6 @@ import ge.nika.gym_crm.entities.Training;
 
 public interface TrainingService {
     void create(Training training);
-    Training select(Integer traineeId, Integer trainerId);
+    Training select(Integer trainingId);
 
 }

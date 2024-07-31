@@ -11,4 +11,7 @@ public interface TraineeService {
     Trainee select(String userName);
     Trainee update(Integer id, Trainee newTrainee);
     void delete(String username);
+    void changePassword(String username, String password);
+    void activateDeactivate(String username, Boolean isActive);
+
 }

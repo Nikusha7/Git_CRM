@@ -7,6 +7,7 @@ public interface TrainerService {
     Trainer create(TrainerDTO trainerDTO);
     Trainer select(String username);
     Trainer update(Integer userId, Trainer newTrainer);
-
+    void changePassword(String username, String password);
+    void activateDeactivate(String username, Boolean isActive);
 
 }
