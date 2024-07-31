@@ -1,5 +1,7 @@
 package ge.nika.gym_crm.facade;
 
+import ge.nika.gym_crm.DTO.TraineeDTO;
+import ge.nika.gym_crm.DTO.TrainerDTO;
 import ge.nika.gym_crm.entities.Trainee;
 import ge.nika.gym_crm.entities.Trainer;
 import ge.nika.gym_crm.entities.Training;
@@ -22,33 +24,49 @@ public class GymFacade {
     }
 
     // Trainee related methods
-    public void createTrainee(Trainee trainee) {
-        traineeService.create(trainee);
+    public void createTrainee(TraineeDTO traineeDTO) {
+        traineeService.create(traineeDTO);
     }
 
-    public void updateTrainee(Integer userId, Trainee newTrainee) {
-        traineeService.update(userId, newTrainee);
+    public Trainee getTrainee(String username) {
+        return traineeService.select(username);
     }
 
-    public void deleteTrainee(Integer userId) {
-        traineeService.delete(userId);
+    public void updateTrainee(Integer id, Trainee newTrainee) {
+        traineeService.update(id, newTrainee);
     }
 
-    public Trainee getTrainee(Integer userId) {
-        return traineeService.select(userId);
+    public void changePasswordTrainee(String username, String password) {
+        traineeService.changePassword(username, password);
+    }
+
+    public void activeDeactivateTrainee(String username, Boolean isActive) {
+        traineeService.activateDeactivate(username, isActive);
+    }
+
+    public void deleteTrainee(String username) {
+        traineeService.delete(username);
     }
 
     // Trainer related methods
-    public void createTrainer(Trainer trainer) {
-        trainerService.create(trainer);
+    public void createTrainer(TrainerDTO trainerDTO) {
+        trainerService.create(trainerDTO);
     }
 
     public void updateTrainer(Integer userId, Trainer newTrainer) {
         trainerService.update(userId, newTrainer);
     }
 
-    public Trainer getTrainer(Integer userId) {
-        return trainerService.select(userId);
+    public Trainer getTrainer(String username) {
+        return trainerService.select(username);
+    }
+
+    public void changePasswordTrainer(String username, String password) {
+        trainerService.changePassword(username, password);
+    }
+
+    public void activeDeactivateTrainer(String username, Boolean isActive) {
+        trainerService.activateDeactivate(username, isActive);
     }
 
     // Training related methods
@@ -56,8 +74,8 @@ public class GymFacade {
         trainingService.create(training);
     }
 
-    public Training getTraining(Integer trainerId, Integer traineeId) {
-        return trainingService.select(trainerId, traineeId);
+    public Training getTraining(Integer id) {
+        return trainingService.select(id);
     }
 
 }
