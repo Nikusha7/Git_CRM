@@ -25,6 +25,11 @@ public class Trainer {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
     private User user;
 
+    public Trainer(TrainingType specialization, User user) {
+        this.specialization = specialization;
+        this.user = user;
+    }
+
     public Trainer(TrainingType specialization) {
         this.specialization = specialization;
     }
