@@ -20,12 +20,13 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void create(Training training) {
+    public Training create(Training training) {
         log.info("Creating a new training session: {}", training);
 
         Training savedTraining = trainingRepository.save(training);
 
         log.info("Training session created with ID: {}", savedTraining.getId());
+        return savedTraining;
     }
 
     @Override
