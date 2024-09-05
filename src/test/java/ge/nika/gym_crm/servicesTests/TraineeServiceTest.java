@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +34,7 @@ class TraineeServiceTest {
     @Test
     void testCreateTrainee() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         Trainee result = traineeService.create(traineeDTO);
 
         assertNotNull(result);
@@ -45,7 +45,7 @@ class TraineeServiceTest {
     @Test
     void testSelectTrainee() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         traineeService.create(traineeDTO);
 
         Trainee result = traineeService.select("John.Bonny");
@@ -63,11 +63,11 @@ class TraineeServiceTest {
     @Test
     void testUpdateTrainee() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         Trainee existingTrainee = traineeService.create(traineeDTO);
 
         User updatedUser = new User("John", "Doe-Updated", true);
-        Trainee updatedTrainee = new Trainee(Date.valueOf(LocalDate.now()), "Georgia, Tbilisi Updated", updatedUser);
+        Trainee updatedTrainee = new Trainee(new Date(), "Georgia, Tbilisi Updated", updatedUser);
 
         Trainee result = traineeService.update(existingTrainee.getId(), updatedTrainee);
 
@@ -79,7 +79,7 @@ class TraineeServiceTest {
     @Test
     void update_ShouldThrowExceptionWhenTraineeNotFound() {
         User updatedUser = new User("John", "Doe Updated", true);
-        Trainee updatedTrainee = new Trainee(Date.valueOf(LocalDate.now()), "Georgia, Tbilisi Updated", updatedUser);
+        Trainee updatedTrainee = new Trainee(new Date(), "Georgia, Tbilisi Updated", updatedUser);
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             traineeService.update(111111, updatedTrainee);
@@ -91,7 +91,7 @@ class TraineeServiceTest {
     @Test
     void delete_ShouldDeleteTraineeAndUser() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         Trainee existingTrainee = traineeService.create(traineeDTO);
 
         traineeService.delete("John.Bonny");
@@ -112,7 +112,7 @@ class TraineeServiceTest {
     @Test
     void changePassword_ShouldChangePassword() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         Trainee existingTrainee = traineeService.create(traineeDTO);
 
         traineeService.changePassword("John.Bonny", "newPassword123");
@@ -132,7 +132,7 @@ class TraineeServiceTest {
     @Test
     void activateDeactivate_ShouldUpdateActiveStatus() {
         TraineeDTO traineeDTO = new TraineeDTO("John", "Bonny", true,
-                Date.valueOf(LocalDate.now()), "Georgia, Tbilisi");
+                new Date(), "Georgia, Tbilisi");
         Trainee existingTrainee = traineeService.create(traineeDTO);
 
         traineeService.activateDeactivate("John.Bonny", false);

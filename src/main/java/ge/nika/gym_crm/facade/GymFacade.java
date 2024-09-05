@@ -70,9 +70,9 @@ public class GymFacade {
     }
 
     // Training related methods
-    public void createTraining(Training training) {
-        trainingService.create(training);
-    }
+//    public void createTraining(Training training) {
+//        trainingService.create(training);
+//    }
 
     public Training getTraining(Integer id) {
         return trainingService.select(id);
