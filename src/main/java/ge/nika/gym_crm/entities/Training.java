@@ -21,12 +21,12 @@ public class Training {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "trainer_id", referencedColumnName = "id", nullable = false)
-    private Trainer trainer;
-
-    @ManyToOne
     @JoinColumn(name = "trainee_id", referencedColumnName = "id", nullable = false)
     private Trainee trainee;
+
+    @ManyToOne
+    @JoinColumn(name = "trainer_id", referencedColumnName = "id", nullable = false)
+    private Trainer trainer;
 
     @Column(nullable = false)
     private String trainingName;
@@ -40,13 +40,14 @@ public class Training {
     @Column(nullable = false)
     private Integer trainingDuration;
 
-    public Training(Trainer trainer, Trainee trainee, String trainingName, TrainingType trainingType,
+    public Training(Trainee trainee, Trainer trainer, String trainingName, TrainingType trainingType,
                     Date trainingDate, Integer trainingDuration) {
-        this.trainer = trainer;
         this.trainee = trainee;
+        this.trainer = trainer;
         this.trainingName = trainingName;
         this.trainingType = trainingType;
         this.trainingDate = trainingDate;
         this.trainingDuration = trainingDuration;
     }
+
 }

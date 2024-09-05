@@ -1,5 +1,6 @@
 package ge.nika.gym_crm.DTO;
 
+import ge.nika.gym_crm.entities.User;
 import lombok.*;
 
 @Setter
@@ -15,6 +16,9 @@ public class UserDTO {
 
     private Boolean isActive;
 
+    public User getUser() {
+        return new User(userName, firstName, lastName, password, isActive);
+    }
 
     public UserDTO(String firstName, String lastName, Boolean isActive) {
         this.firstName = firstName;

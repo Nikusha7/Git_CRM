@@ -11,8 +11,11 @@ import java.util.*;
 @Configuration
 public class TrainingTypeConfig {
 
-    @Autowired
-    TrainingTypeRepository trainingTypeRepository;
+    private final TrainingTypeRepository trainingTypeRepository;
+
+    public TrainingTypeConfig(TrainingTypeRepository trainingTypeRepository) {
+        this.trainingTypeRepository = trainingTypeRepository;
+    }
 
     @PostConstruct
     public void initializeTrainingTypes() {

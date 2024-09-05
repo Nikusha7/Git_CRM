@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class TrainingDTO {
-    private Integer id;
+
     private Integer trainerId;
     private Integer traineeId;
     private String trainingName;
@@ -15,5 +15,14 @@ public class TrainingDTO {
     private LocalDate trainingDate;
     private Integer trainingDuration;
 
+    public TrainingDTO(Integer trainerId, Integer traineeId, String trainingName,
+                       Integer trainingTypeId, LocalDate trainingDate, Integer trainingDuration) {
+        this.trainerId = trainerId;
+        this.traineeId = traineeId;
+        this.trainingName = trainingName;
+        this.trainingTypeId = trainingTypeId;
+        this.trainingDate = trainingDate;
+        this.trainingDuration = trainingDuration;
+    }
 
 }
