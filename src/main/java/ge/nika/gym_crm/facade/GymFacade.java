@@ -24,58 +24,12 @@ public class GymFacade {
     }
 
     // Trainee related methods
-    public void createTrainee(TraineeDTO traineeDTO) {
-        traineeService.create(traineeDTO);
-    }
-
-    public Trainee getTrainee(String username) {
-        return traineeService.select(username);
-    }
-
-    public void updateTrainee(Integer id, Trainee newTrainee) {
-        traineeService.update(id, newTrainee);
-    }
-
-    public void changePasswordTrainee(String username, String password) {
-        traineeService.changePassword(username, password);
-    }
-
-    public void activeDeactivateTrainee(String username, Boolean isActive) {
-        traineeService.activateDeactivate(username, isActive);
-    }
-
-    public void deleteTrainee(String username) {
-        traineeService.delete(username);
-    }
+//   TODO: use trainee service methods
 
     // Trainer related methods
-    public void createTrainer(TrainerDTO trainerDTO) {
-        trainerService.create(trainerDTO);
-    }
-
-    public void updateTrainer(Integer userId, Trainer newTrainer) {
-        trainerService.update(userId, newTrainer);
-    }
-
-    public Trainer getTrainer(String username) {
-        return trainerService.select(username);
-    }
-
-    public void changePasswordTrainer(String username, String password) {
-        trainerService.changePassword(username, password);
-    }
-
-    public void activeDeactivateTrainer(String username, Boolean isActive) {
-        trainerService.activateDeactivate(username, isActive);
-    }
-
+//   TODO: use trainer service methods
     // Training related methods
-    public void createTraining(Training training) {
-        trainingService.create(training);
-    }
+//   TODO: use training service methods
 
-    public Training getTraining(Integer id) {
-        return trainingService.select(id);
-    }
 
 }
